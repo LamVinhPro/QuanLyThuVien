@@ -1,0 +1,14 @@
+C:\Users\Lenovo\Desktop\QLTV\QLTV\bin\Debug\QLTV.exe.config
+C:\Users\Lenovo\Desktop\QLTV\QLTV\bin\Debug\QLTV.exe
+C:\Users\Lenovo\Desktop\QLTV\QLTV\bin\Debug\QLTV.pdb
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.Properties.Resources.resources
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.csproj.GenerateResource.Cache
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.exe
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.pdb
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.frmDangNhap.resources
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.frmUpdate.resources
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.frmMain.resources
+C:\Users\Lenovo\Desktop\QLTV\QLTV\obj\Debug\QLTV.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Downloads\QLTV\QLTV\QLTV\bin\Debug\QLTV.exe.config
+C:\Users\DELL\Downloads\QLTV\QLTV\QLTV\obj\Debug\QLTV.exe
+C:\Users\DELL\Downloads\QLTV\QLTV\QLTV\obj\Debug\QLTV.pdb
