@@ -1,0 +1,208 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using BLL_DLL;
+using System.IO;
+
+namespace DA_QLTV
+{
+    public partial class frmChiTietTaiLieu : Form
+    {
+        string tentailieu;
+
+        public frmChiTietTaiLieu(string tentailieu)
+        {
+            InitializeComponent();
+            this.tentailieu = tentailieu;
+            loadcbb();
+            loadtxtcbb();
+            
+
+            //txtMaTaiLieu.Enabled = false;
+            //txtTenTaiLieu.Enabled = false;
+            //cbbTheLoai.Enabled = false;
+            //cbbNXB.Enabled = false;
+            //cbbTacGia.Enabled = false;
+            //cbbViTri.Enabled = false;
+            //cbbHinhThuc.Enabled = false;
+            //txtLinkNCC.Enabled = false;
+            //txtSoLuong.Enabled = false;
+            //txtSoTrang.Enabled = false;
+            //txtNamXB.Enabled = false;
+        
+         
+
+        }
+        public frmChiTietTaiLieu()
+        {
+            InitializeComponent();
+            loadcbb();
+        }
+        public void loadcbb()
+        {
+            TaiLieu tl = new TaiLieu();
+            cbbTheLoai.DataSource = tl.loadcbbTheLoai();
+            cbbTacGia.DataSource = tl.loadcbbtacgia();
+            cbbNXB.DataSource = tl.loadcbbnxb();
+            cbbViTri.DataSource = tl.loadcbbvitri();
+          
+        }
+        public Image ByteArrayToImage2(byte[] byteArryIn)
+        {
+            using (MemoryStream ms = new MemoryStream(byteArryIn))
+            {
+                Image returnImage = Image.FromStream(ms);
+                return returnImage;
+
+            }
+        }
+        void loadtxtcbb()
+        {
+            TaiLieu tl = new TaiLieu();
+            txtMaTaiLieu.Text = tl.loadMaTaiLieu(tentailieu);
+            txtTenTaiLieu.Text = tentailieu;
+            cbbNXB.Text = tl.loadnxb(tentailieu);
+            cbbTheLoai.Text = tl.loadtheloai(tentailieu);
+            cbbTacGia.Text = tl.loadtacgia(tentailieu);
+            cbbViTri.Text = tl.loadvitri(tentailieu);
+            cbbHinhThuc.Text = tl.loadhinhthuc(tentailieu);
+            txtSoLuong.Text = tl.loadsoluong(tentailieu);
+            txtSoTrang.Text = tl.loadsotrang(tentailieu);
+            txtNamXB.Text = tl.loadnamxb(tentailieu);
+            txtLinkNCC.Text = tl.loadlink(tentailieu);
+            pictureBox2.Image = byteArrayToImage(tl.loadAnhQR(tentailieu));
+            pictureBox1.Image = byteArrayToImage(tl.loadAnhTaiLieu(tentailieu));
+            //pictureBox2.Image =  MemoryStream(tl.loadAnhQR(tentailieu).imageData);
+          
+            //this.Size = new System.Drawing.Size(320, 340);
+            //btnThem.Hide();
+        
+           
+           
+           
+        }
+
+        private void btnTaoMa_Click(object sender, EventArgs e)
+        {
+            QRCoder.QRCodeGenerator qr = new QRCoder.QRCodeGenerator();
+            var data = qr.CreateQrCode(txtLinkNCC.Text, QRCoder.QRCodeGenerator.ECCLevel.H);
+            var code = new QRCoder.QRCode(data);
+            pictureBox2.Image = code.GetGraphic(2);
+        }
+        byte[] luuAnhtoSql(Image img)
+        {
+            //  luu anh den co so du lieu       
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                return ms.ToArray();
+
+            }
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+
+            TaiLieu tl = new TaiLieu();
+
+            if (tl.themTaiLieu(txtMaTaiLieu.Text, txtTenTaiLieu.Text, cbbNXB.Text, cbbTacGia.Text, cbbViTri.Text, cbbHinhThuc.Text, int.Parse(txtSoLuong.Text), int.Parse(txtSoTrang.Text), int.Parse(txtNamXB.Text), txtLinkNCC.Text, luuAnhtoSql(pictureBox2.Image), luuAnhtoSql(pictureBox1.Image), cbbTheLoai.Text) == true)
+            {
+                MessageBox.Show("Thêm thành công!");
+                this.Close();
+                frmTaiLieu frm = new frmTaiLieu();
+                frm.Show();
+
+            }
+            else 
+            {
+                MessageBox.Show("Thêm thất bại!");
+            }
+        }
+        private Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
+
+        private void btnLayAnh_Click(object sender, EventArgs e)
+        {
+            String imagelocation = "";
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png| All Files(*.*)|*.*";
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    imagelocation = dialog.FileName;
+                    pictureBox1.ImageLocation = imagelocation;
+
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi!");
+            }
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            TaiLieu tl = new TaiLieu();
+
+            if (tl.SuaTaiLieu(txtMaTaiLieu.Text, txtTenTaiLieu.Text, cbbNXB.Text, cbbTacGia.Text, cbbViTri.Text, cbbHinhThuc.Text, int.Parse(txtSoLuong.Text), int.Parse(txtSoTrang.Text), int.Parse(txtNamXB.Text), txtLinkNCC.Text, cbbTheLoai.Text) == true)
+            {
+                MessageBox.Show("Sửa thành công!");
+                this.Close();
+                frmTaiLieu frm = new frmTaiLieu();
+                frm.Show();
+
+            }
+            else
+            {
+                MessageBox.Show("Sửa thất bại!");
+            }
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn xóa?", "Thông báo!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                TaiLieu tl = new TaiLieu();
+                tl.xoaTaiLieu(txtMaTaiLieu.Text);
+                this.Close();              
+                MessageBox.Show("Xóa thành công!");
+                frmTaiLieu frm = new frmTaiLieu();
+                frm.Show();
+                
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                
+            }
+        }
+
+        private void Thoát_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            frmTaiLieu frm = new frmTaiLieu();
+            frm.Show();
+        }
+
+        private void btnChoMuon_Click(object sender, EventArgs e)
+        {
+            frmHoaDon frm = new frmHoaDon();
+            frm.Show();
+        }
+
+
+       
+    }
+}
